@@ -1,0 +1,285 @@
+{
+    "Barton and Sandhills": {
+        "candidates": [
+            {
+                "lastName": "Artwell",
+                "names": "Chaka",
+                "description": "Independent",
+                "party": "IND",
+                "votes": 220,
+                "elected": false
+            },
+            {
+                "lastName": "Joyce",
+                "names": "Callum Joseph",
+                "description": "Trade Unionist and Socialist Coalition",
+                "party": "TUSC",
+                "votes": 19,
+                "elected": false
+            },
+            {
+                "lastName": "Matthews",
+                "names": "Jack James",
+                "description": "Local Conservatives",
+                "party": "CON",
+                "votes": 178,
+                "elected": false
+            },
+            {
+                "lastName": "Rogers",
+                "names": "Paul",
+                "description": "Liberal Democrat",
+                "party": "LD",
+                "votes": 122,
+                "elected": false
+            },
+            {
+                "lastName": "Rowley",
+                "names": "Michael Derek",
+                "description": "Labour and Co-operative Party",
+                "party": "LAB",
+                "votes": 603,
+                "elected": true
+            }
+        ]
+    },
+    "Blackbird Leys": {
+        "candidates": [
+            {
+                "lastName": "Humberstone",
+                "names": "Rae",
+                "description": "Labour Party",
+                "party": "LAB",
+                "votes": 625,
+                "elected": true
+            },
+            {
+                "lastName": "Kantor",
+                "names": "Alexandrine Arielle Theodora",
+                "description": "Liberal Democrat",
+                "party": "LD",
+                "votes": 68,
+                "elected": false
+            },
+            {
+                "lastName": "Kiley",
+                "names": "Thomas Henry",
+                "description": "Green Party",
+                "party": "GRN",
+                "votes": 72,
+                "elected": false
+            },
+            {
+                "lastName": "Kowalska",
+                "names": "Agnieszka",
+                "description": "Trade Unionist and Socialist Coalition",
+                "party": "TUSC",
+                "votes": 65,
+                "elected": false
+            }
+        ]
+    },
+    "Carfax and Jericho": {
+        "candidates": [
+            {
+                "lastName": "Edwards",
+                "names": "Sarah Janet",
+                "description": "Green Party",
+                "party": "GRN",
+                "votes": 363,
+                "elected": false
+            },
+            {
+                "lastName": "Hollingsworth",
+                "names": "Alexander John",
+                "description": "Labour and Co-operative Party",
+                "party": "LAB",
+                "votes": 802,
+                "elected": true
+            },
+            {
+                "lastName": "Pischke",
+                "names": "Kai Michael",
+                "description": "Liberal Democrat",
+                "party": "LD",
+                "votes": 168,
+                "elected": false
+            },
+            {
+                "lastName": "Pope",
+                "names": "David James",
+                "description": "Local Conservatives",
+                "party": "CON",
+                "votes": 95,
+                "elected": false
+            }
+        ]
+    },
+    "Churchill": {
+        "candidates": [
+            {
+                "lastName": "Brown",
+                "names": "Susan Woolford",
+                "description": "Labour Party",
+                "party": "LAB",
+                "votes": 664,
+                "elected": true
+            },
+            {
+                "lastName": "Hitchcock",
+                "names": "Philippa Louise",
+                "description": "Liberal Democrat",
+                "party": "LD",
+                "votes": 97,
+                "elected": false
+            },
+            {
+                "lastName": "Kiggell",
+                "names": "Carlin Arthur",
+                "description": "Trade Unionist and Socialist Coalition",
+                "party": "TUSC",
+                "votes": 67,
+                "elected": false
+            },
+            {
+                "lastName": "Saunders",
+                "names": "Jennifer",
+                "description": "Local Conservatives",
+                "party": "CON",
+                "votes": 166,
+                "elected": false
+            },
+            {
+                "lastName": "Watts",
+                "names": "Duncan William Henry",
+                "description": "Green Party",
+                "party": "GRN",
+                "votes": 153,
+                "elected": false
+            }
+        ]
+    },
+    "Cowley": {
+        "candidates": [
+            {
+                "lastName": "Henwood",
+                "names": "David",
+                "description": "Independent",
+                "party": "IND",
+                "votes": 686,
+                "elected": false
+            },
+            {
+                "lastName": "Kettle",
+                "names": "Katherine",
+                "description": "Local Conservatives",
+                "party": "CON",
+                "votes": 124,
+                "elected": false
+            },
+            {
+                "lastName": "Atif",
+                "names": "Mohammed Amar",
+                "description": "Labour Party",
+                "party": "LAB",
+                "votes": 978,
+                "elected": true
+            },
+            {
+                "lastName": "Rogers",
+                "names": "Steven",
+                "description": "Green Party",
+                "party": "GRN",
+                "votes": 195,
+                "elected": false
+            },
+            {
+                "lastName": "Wilkins",
+                "names": "Andrew John",
+                "description": "Liberal Democrat",
+                "party": "LD",
+                "votes": 195,
+                "elected": true
+            }
+        ]
+    },
+    "Cutteslowe and Sunnymead": {
+        "candidates": [
+            {
+                "lastName": "Fouweather",
+                "names": "Laurence George",
+                "description": "Liberal Democrat",
+                "party": "LD",
+                "votes": 1184,
+                "elected": true
+            },
+            {
+                "lastName": "Fox",
+                "names": "John Edward",
+                "description": "Green Party",
+                "party": "GRN",
+                "votes": 195,
+                "elected": false
+            },
+            {
+                "lastName": "Jackson",
+                "names": "Jennifer Jane",
+                "description": "Local Conservatives",
+                "party": "CON",
+                "votes": 279,
+                "elected": false
+            },
+            {
+                "lastName": "Van Es",
+                "names": "Bart Bastiaan",
+                "description": "Labour Party",
+                "party": "LAB",
+                "votes": 476
+            }
+        ]
+    },
+    "Donnington": {
+        "candidates": [
+            {
+                "lastName": "Azad",
+                "names": "Mohammed",
+                "description": "Independent",
+                "party": "IND",
+                "votes": 459,
+                "elected": false
+            },
+            {
+                "lastName": "Bagdash",
+                "names": "Roushin",
+                "description": "Labour Party",
+                "party": "LAB",
+                "votes": 623,
+                "elected": false
+            },
+            {
+                "lastName": "Bazley",
+                "names": "Simon James",
+                "description": "Local Conservatives",
+                "party": "CON",
+                "votes": 73,
+                "elected": false
+            },
+            {
+                "lastName": "Coggins",
+                "names": "Peter Charles",
+                "description": "Liberal Democrat",
+                "party": "LD",
+                "votes": 38,
+                "elected": false
+            },
+            {
+                "lastName": "Rawle",
+                "names": "Rosie Mae",
+                "description": "Green Party",
+                "party": "GRN",
+                "votes": 792,
+                "elected": true
+            }
+        ]
+    }
+}
