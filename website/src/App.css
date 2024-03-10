@@ -1,0 +1,11 @@
+
+main.app {
+    flex-grow: 1;
+    height: 100%;
+    overflow: hidden;
+    justify-content: stretch;
+  }
+  
+section#map, div.leaflet-container {
+    height: 100%;
+}

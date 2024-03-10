@@ -1,0 +1,8 @@
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: stretch;
+  align-items: stretch;
+  overflow: hidden;
+}
