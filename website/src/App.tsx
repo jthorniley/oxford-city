@@ -121,68 +121,90 @@ function WardTooltip(props: WardTooltipProps) {
   )
 }
 
+type AppState = {
+  map: L.Map | null
+  currentWard: WardName | null
+  currentLayer: L.Layer | null
+}
+
+type AppAction = "INIT" | { highlightWard: [WardName, L.Layer] | null };
+
 function App() {
   const mapRef = React.useRef<HTMLElement>(null);
-  const [map, setMap] = React.useState<L.Map | null>(null);
-  const [currentWard, setCurrentWard] = React.useState<WardName | null>(null);
-  const [layer, setLayer] = React.useState<L.Layer | null>(null);
+  //const [map, setMap] = React.useState<L.Map | null>(null);
+  // const [currentWard, setCurrentWard] = React.useState<WardName | null>(null);
+  //const [layer, setLayer] = React.useState<L.Layer | null>(null);
 
-  // Initialise map
-  React.useEffect(() => {
-    if (mapRef.current === null || map !== null) {
-      return;
-    }
-
-    while (mapRef.current.firstChild !== null) {
-      mapRef.current.removeChild(mapRef.current.firstChild);
-    }
-    const mapEl = document.createElement("div")
-    mapRef.current.appendChild(mapEl);
-
-    setMap(L.map(mapEl).setView([51.755409, -1.255782], 12));
-  }, [map, setMap, mapRef]);
-
-  React.useEffect(() => {
-    if (map === null) {
-      return;
-    }
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-
-    L.geoJSON(oxfordWards as any,
-      {
-        style: (feature) => {
-          var color = DEFAULT_COLOR;
-          if (feature) {
-            const ward = feature.properties.Ward_name;
-            const winner = getWinner(ward);
-            if (winner) {
-              color = getPartyColor(winner.party);
-            }
-          }
-          return {
-            stroke: true,
-            color: "black",
-            opacity: 0.9,
-            weight: 0.5,
-
-            fill: true,
-            fillColor: color,
-            fillOpacity: 0.5,
-          };
-        },
-        onEachFeature(feature, layer) {
-          layer.addEventListener("mouseover", () => {
-            setCurrentWard(feature.properties.Ward_name);
-            setLayer(layer);
-          })
-        },
+  function AppReducer(state: AppState, action: AppAction): AppState {
+    if (action === "INIT") {
+      while (mapRef.current!.firstChild !== null) {
+        mapRef.current!.removeChild(mapRef.current!.firstChild);
       }
-    ).addTo(map);
+      const mapEl = document.createElement("div")
+      mapRef.current!.appendChild(mapEl);
 
-  }, [map, setCurrentWard, setLayer])
+      const map = L.map(mapEl);
+      map.setView([51.755409, -1.255782], 12)
+
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
+
+      L.geoJSON(oxfordWards as any,
+        {
+          style: (feature) => {
+            var color = DEFAULT_COLOR;
+            if (feature) {
+              const ward = feature.properties.Ward_name;
+              const winner = getWinner(ward);
+              if (winner) {
+                color = getPartyColor(winner.party);
+              }
+            }
+            return {
+              stroke: true,
+              color: "black",
+              opacity: 0.9,
+              weight: 0.5,
+
+              fill: true,
+              fillColor: color,
+              fillOpacity: 0.5,
+            };
+          },
+          onEachFeature(feature, layer) {
+            layer.addEventListener("mouseover", () => {
+              dispatch({ highlightWard: [feature.properties.Ward_name, layer] });
+            })
+          },
+        }
+      ).addTo(map);
+      return {
+        ...state, map
+      };
+    }
+    else if ('highlightWard' in action) {
+      if (action.highlightWard === null) {
+        return { ...state, currentLayer: null, currentWard: null }
+      } else {
+        return {
+          ...state, currentWard: action.highlightWard[0], currentLayer: action.highlightWard[1]
+        }
+      }
+    }
+
+    throw new Error("unexpected action")
+
+  }
+
+  const [state, dispatch] = React.useReducer(AppReducer, { map: null } as AppState)
+
+  React.useEffect(() => {
+    if (mapRef.current) {
+      dispatch("INIT");
+    }
+  }, [mapRef])
 
   return (
     <>
@@ -190,11 +212,13 @@ function App() {
         <h1>Oxford City Council</h1>
       </header>
       <main className="app">
-        {currentWard && layer && map && (
-          <WardTooltip wardName={currentWard} map={map} layer={layer} />
-        )}
-        <section id="map" ref={mapRef}></section>
-      </main>
+        {
+          state.currentWard && state.currentLayer && state.map && (
+            <WardTooltip wardName={state.currentWard} map={state.map} layer={state.currentLayer} />
+          )
+        }
+        < section id="map" ref={mapRef}></section>
+      </main >
     </>
   )
 }
