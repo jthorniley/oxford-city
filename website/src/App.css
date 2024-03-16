@@ -9,3 +9,8 @@ main.app {
 section#map, div.leaflet-container {
     height: 100%;
 }
+
+div.ward-tooltip {
+    background-color: white;
+    padding: 8px;
+}

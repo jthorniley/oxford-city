@@ -79,7 +79,7 @@
             }
         ]
     },
-    "Carfax and Jericho": {
+    "Carfax & Jericho": {
         "candidates": [
             {
                 "lastName": "Edwards",
@@ -234,7 +234,8 @@
                 "names": "Bart Bastiaan",
                 "description": "Labour Party",
                 "party": "LAB",
-                "votes": 476
+                "votes": 476,
+                "elected": false
             }
         ]
     },
