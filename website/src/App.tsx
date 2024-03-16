@@ -9,14 +9,54 @@ import results2022 from "./data/results-2022.json";
 
 type WardName = keyof typeof results2022;
 
+type Party = "LAB" | "GRN" | "CON" | "LD" | "IND" | "TUSC";
+
+const DEFAULT_COLOR: string = "#aaaaaa";
+
+function getPartyColor(party: Party): string {
+  if (party === "LAB") {
+    return "#d41a24";
+  } else if (party === "GRN") {
+    return "#4ab316";
+  } else if (party === "CON") {
+    return "#168bb3";
+  } else if (party === "LD") {
+    return "#e0c324";
+  } else if (party === "TUSC") {
+    return "#423311";
+  }
+  // IND / unknown
+  return DEFAULT_COLOR;
+}
+
 type CandidateEntry = {
   lastName: string
   names: string
   description: string
-  party: string
+  party: Party
   votes: number
   elected: boolean
 
+}
+
+function getWinner(wardName: WardName): CandidateEntry | null {
+  const ward = results2022[wardName]
+  if (ward === undefined) {
+    return null;
+  }
+
+  const localCandidates = ward.candidates;
+  if (ward === undefined) {
+    return null;
+  }
+
+  for (const candidate of localCandidates) {
+    if (candidate.elected) {
+      return candidate as CandidateEntry
+    }
+  }
+
+  return null
 }
 
 type CandidateProps = {
@@ -27,7 +67,12 @@ function Candidate(props: CandidateProps) {
   const { candidate } = props;
 
   return (<>
-    <div>{candidate.lastName}</div>
+    <div>
+      <span className="candidateName">{candidate.lastName}</span>
+      <span className="candidateParty">{candidate.party}</span>
+      <span className="candidateVotes">{candidate.votes}</span>
+      {candidate.elected && <span className="candidateElected">*</span>}
+    </div>
   </>)
 }
 
@@ -41,7 +86,7 @@ function Candidates(props: CandidatesProps) {
 
   return (
     <>
-      {candidates.map((candidate: CandidateEntry) => <Candidate key={candidate.lastName} candidate={candidate} />)}
+      {candidates.map((candidate: CandidateEntry, idx: number) => <Candidate key={idx} candidate={candidate} />)}
     </>
   )
 }
@@ -108,13 +153,24 @@ function App() {
 
     L.geoJSON(oxfordWards as any,
       {
-        style: () => {
+        style: (feature) => {
+          var color = DEFAULT_COLOR;
+          if (feature) {
+            const ward = feature.properties.Ward_name;
+            const winner = getWinner(ward);
+            if (winner) {
+              color = getPartyColor(winner.party);
+            }
+          }
           return {
             stroke: true,
-            weight: 1,
-            color: "#33bbaa",
-            opacity: 1,
-            fill: true
+            color: "black",
+            opacity: 0.9,
+            weight: 0.5,
+
+            fill: true,
+            fillColor: color,
+            fillOpacity: 0.5,
           };
         },
         onEachFeature(feature, layer) {
