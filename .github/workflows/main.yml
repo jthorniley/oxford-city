@@ -15,4 +15,4 @@ jobs:
           node-version: '21.x'
       - name: build with vite
         working-directory: ./website
-        run: npm install && run: npm run build
+        run: npm install && npm run build
