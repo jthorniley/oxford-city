@@ -24,8 +24,10 @@ function getPartyColor(party: Party): string {
     return "#e0c324";
   } else if (party === "TUSC") {
     return "#423311";
+  } else if (party === "IND") {
+    return "#555555"
   }
-  // IND / unknown
+  // unknown
   return DEFAULT_COLOR;
 }
 
