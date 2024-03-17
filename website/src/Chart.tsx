@@ -18,7 +18,7 @@ export function Chart(props: ChartProps) {
     const bars: React.ReactElement[] = []
     var i = 0;
     for (const candidate of sortedCandidates) {
-        const pct = Math.ceil((candidate.votes / totalVotes) * 100)
+        const pct = Math.round((candidate.votes / totalVotes) * 100)
         i = i + 1;
         bars.push(
             <React.Fragment key={i}>
