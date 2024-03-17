@@ -3,43 +3,15 @@ import "./App.css";
 
 import L from "leaflet";
 import React from "react";
+import { CandidateEntry, DEFAULT_COLOR, getPartyColor } from "./parties";
 
+import { Chart } from "./Chart";
 import oxfordWards from "./data/oxford-wards.json";
 import results2022 from "./data/results-2022.json";
 
 type WardName = keyof typeof results2022;
 
-type Party = "LAB" | "GRN" | "CON" | "LD" | "IND" | "TUSC";
 
-const DEFAULT_COLOR: string = "#aaaaaa";
-
-function getPartyColor(party: Party): string {
-  if (party === "LAB") {
-    return "#d41a24";
-  } else if (party === "GRN") {
-    return "#4ab316";
-  } else if (party === "CON") {
-    return "#168bb3";
-  } else if (party === "LD") {
-    return "#e0c324";
-  } else if (party === "TUSC") {
-    return "#423311";
-  } else if (party === "IND") {
-    return "#555555"
-  }
-  // unknown
-  return DEFAULT_COLOR;
-}
-
-type CandidateEntry = {
-  lastName: string
-  names: string
-  description: string
-  party: Party
-  votes: number
-  elected: boolean
-
-}
 
 function getWinner(wardName: WardName): CandidateEntry | null {
   const ward = results2022[wardName]
@@ -94,30 +66,31 @@ function Candidates(props: CandidatesProps) {
 }
 
 type WardTooltipProps = {
-  map: L.Map
   layer: L.Layer
   wardName: WardName
 }
 
 function WardTooltip(props: WardTooltipProps) {
   const tooltipRef = React.useRef<HTMLDivElement>(null);
-  const { map, layer, wardName } = props;
+  const { layer, wardName } = props;
 
   React.useEffect(() => {
     if (!tooltipRef.current) {
       return;
     }
 
-    layer.bindPopup(tooltipRef.current!).openPopup()
-  }, [tooltipRef, map, layer]);
-
+    const popup = L.popup();
+    layer.bindPopup(popup)
+    popup.setContent(tooltipRef.current!)
+    layer.openPopup()
+  }, [tooltipRef, layer])
   const data = results2022[wardName];
 
   return (
     <>
-      <div ref={tooltipRef}>
-        {wardName}
-        {data && <Candidates candidates={data.candidates} />}
+      <div ref={tooltipRef} style={{}}>
+        <div>{wardName}</div>
+        {data && <Chart candidates={data.candidates as any} />}
       </div>
     </>
   )
@@ -215,11 +188,11 @@ function App() {
       </header>
       <main className="app">
         {
-          state.currentWard && state.currentLayer && state.map && (
-            <WardTooltip wardName={state.currentWard} map={state.map} layer={state.currentLayer} />
+          state.currentWard && state.currentLayer && (
+            <WardTooltip wardName={state.currentWard} layer={state.currentLayer} />
           )
         }
-        < section id="map" ref={mapRef}></section>
+        <section id="map" ref={mapRef}></section>
       </main >
     </>
   )

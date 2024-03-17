@@ -485,7 +485,7 @@
                 "names": "Judith Anne",
                 "description": "Independent",
                 "party": "IND",
-                "votes": "462",
+                "votes": 462,
                 "elected": false
             },
             {
@@ -589,7 +589,7 @@
                 "names": "David Rudolf",
                 "description": "Green Party",
                 "party": "GRN",
-                "votes": "74",
+                "votes": 74,
                 "elected": false
             },
             {
