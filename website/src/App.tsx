@@ -33,47 +33,14 @@ function getWinner(wardName: WardName): CandidateEntry | null {
   return null
 }
 
-type CandidateProps = {
-  candidate: CandidateEntry
-}
-
-function Candidate(props: CandidateProps) {
-  const { candidate } = props;
-
-  return (<>
-    <div>
-      <span className="candidateName">{candidate.lastName}</span>
-      <span className="candidateParty">{candidate.party}</span>
-      <span className="candidateVotes">{candidate.votes}</span>
-      {candidate.elected && <span className="candidateElected">*</span>}
-    </div>
-  </>)
-}
-
-type CandidatesProps = {
-  candidates: Array<CandidateEntry>
-}
-
-function Candidates(props: CandidatesProps) {
-  const { candidates } = props;
-
-
-  return (
-    <>
-      {candidates.map((candidate: CandidateEntry, idx: number) => <Candidate key={idx} candidate={candidate} />)}
-    </>
-  )
-}
-
 type WardTooltipProps = {
   layer: L.Layer
-  wardName: WardName
 }
 
 function WardTooltip(props: WardTooltipProps) {
   const tooltipRef = React.useRef<HTMLDivElement>(null);
-  const { layer, wardName } = props;
-
+  const { layer } = props;
+  const wardName: WardName = (layer as any).feature.properties.Ward_name;
   React.useEffect(() => {
     if (!tooltipRef.current) {
       return;
@@ -83,12 +50,15 @@ function WardTooltip(props: WardTooltipProps) {
     layer.bindPopup(popup)
     popup.setContent(tooltipRef.current!)
     layer.openPopup()
+    layer.closePopup()
+    tooltipRef.current.style["display"] = "block";
   }, [tooltipRef, layer])
+
   const data = results2022[wardName];
 
   return (
     <>
-      <div ref={tooltipRef} style={{}}>
+      <div ref={tooltipRef} style={{ display: "none" }}>
         <div>{wardName}</div>
         {data && <Chart candidates={data.candidates as any} />}
       </div>
@@ -98,17 +68,13 @@ function WardTooltip(props: WardTooltipProps) {
 
 type AppState = {
   map: L.Map | null
-  currentWard: WardName | null
-  currentLayer: L.Layer | null
+  wardLayers: L.Layer[]
 }
 
-type AppAction = "INIT" | { highlightWard: [WardName, L.Layer] | null };
+type AppAction = "INIT";
 
 function App() {
   const mapRef = React.useRef<HTMLElement>(null);
-  //const [map, setMap] = React.useState<L.Map | null>(null);
-  // const [currentWard, setCurrentWard] = React.useState<WardName | null>(null);
-  //const [layer, setLayer] = React.useState<L.Layer | null>(null);
 
   function AppReducer(state: AppState, action: AppAction): AppState {
     if (action === "INIT") {
@@ -126,7 +92,7 @@ function App() {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(map);
 
-      L.geoJSON(oxfordWards as any,
+      const geoJSON = L.geoJSON(oxfordWards as any,
         {
           style: (feature) => {
             var color = DEFAULT_COLOR;
@@ -148,32 +114,19 @@ function App() {
               fillOpacity: 0.5,
             };
           },
-          onEachFeature(feature, layer) {
-            layer.addEventListener("mouseover", () => {
-              dispatch({ highlightWard: [feature.properties.Ward_name, layer] });
-            })
-          },
         }
       ).addTo(map);
+
       return {
-        ...state, map
+        ...state, map, wardLayers: geoJSON.getLayers()
       };
-    }
-    else if ('highlightWard' in action) {
-      if (action.highlightWard === null) {
-        return { ...state, currentLayer: null, currentWard: null }
-      } else {
-        return {
-          ...state, currentWard: action.highlightWard[0], currentLayer: action.highlightWard[1]
-        }
-      }
     }
 
     throw new Error("unexpected action")
 
   }
 
-  const [state, dispatch] = React.useReducer(AppReducer, { map: null } as AppState)
+  const [state, dispatch] = React.useReducer(AppReducer, { map: null, wardLayers: [] } as AppState)
 
   React.useEffect(() => {
     if (mapRef.current) {
@@ -188,9 +141,7 @@ function App() {
       </header>
       <main className="app">
         {
-          state.currentWard && state.currentLayer && (
-            <WardTooltip wardName={state.currentWard} layer={state.currentLayer} />
-          )
+          state.wardLayers.map((layer, index) => <WardTooltip key={index} layer={layer} />)
         }
         <section id="map" ref={mapRef}></section>
       </main >
