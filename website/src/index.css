@@ -5,4 +5,5 @@ html, body {
   justify-items: stretch;
   align-items: stretch;
   overflow: hidden;
+  margin: 0;
 }

@@ -1,4 +1,3 @@
-
 main.app {
     flex-grow: 1;
     height: 100%;
@@ -10,7 +9,3 @@ section#map, div.leaflet-container {
     height: 100%;
 }
 
-div.ward-tooltip {
-    background-color: white;
-    padding: 8px;
-}

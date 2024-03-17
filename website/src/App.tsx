@@ -136,9 +136,6 @@ function App() {
 
   return (
     <>
-      <header className="app">
-        <h1>Oxford City Council</h1>
-      </header>
       <main className="app">
         {
           state.wardLayers.map((layer, index) => <WardTooltip key={index} layer={layer} />)
